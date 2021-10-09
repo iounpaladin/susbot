@@ -25,7 +25,13 @@ async def chooseReaction(msg):
         ["\N{Regional indicator symbol letter I}", "\N{Regional indicator symbol letter M}",
          "\N{Regional indicator symbol letter P}", "\N{Regional indicator symbol letter O}",
          "\N{Regional indicator symbol letter S}", "\N{Regional indicator symbol letter T}", "0️⃣",
-         "\N{Regional indicator symbol letter R}"]
+         "\N{Regional indicator symbol letter R}"],
+        [:amongus:751566927196848198], [:black:777321141450309632], 
+        [:cyan:758808248366923776], [:lime:777321143991926784], 
+        [:magenta:777321143442341908], [:orange:777321887520915477], 
+        [:green:774402054307315713], [:red:774401387136024596], 
+        [:purple:777321143715627039], [:white:777321142683172936],
+        [:embarsus:890299247583440906]
     ]
     choice = options[random.randrange(len(options))]
     for item in choice:
