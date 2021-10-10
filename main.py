@@ -69,6 +69,34 @@ async def owofy(ctx, *, message):
     else:
         await ctx.send("You need to put a message after the command! (%owofy [message])")
 
+        
+ 
+#NOTE: You need to have FFMPEG and the amongus drip song in the bot files
+#Also, replace the "[INSERT HERE]" stuff with the actual routes to the files
+#for example, mine is 
+#C:/Users/[username]/Desktop/susbot/ffmpeg.exe
+#C:/Users/[username]/Desktop/susbot/drip.mp3
+#for the first and second inserts, respectively 
+from discord import FFmpegPCMAudio
+@bot.command()
+async def dripify(ctx):
+    """Makes a voice channel drippy"""
+    if(ctx.author.voice):
+        channel = ctx.message.author.voice.channel
+        voice = await channel.connect()
+        source = FFmpegPCMAudio(executable="[INSERT HERE]", source="[INSERT HERE]")
+        player = voice.play(source)
+    else:
+        await ctx.send("You must be in a voice channel to use this command!")
+
+@bot.command()
+async def undripify(ctx):
+    """Undripify a voice channel"""
+    if ctx.voice_client:
+        await ctx.voice_client.disconnect()
+    else:
+        ctx.send("I'm not in a voice channel!")
+        
 
 tok = ""
 bot.load_extension('jishaku')
