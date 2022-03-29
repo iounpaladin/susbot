@@ -156,3 +156,4 @@ with open(".KEY") as f:
 
 bot.load_extension('jishaku')
 bot.run(tok)
+
