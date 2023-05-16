@@ -40,46 +40,6 @@ async def chooseReaction(msg):
     for item in choice:
         await msg.add_reaction(item)
 
-
-async def susiety(url, message: discord.Message):
-    colours = "red orange yellow green blue indigo violet".split()
-    i = 0
-
-    data = requests.post(
-        "https://api.deepai.org/api/sussy-detector-5055-dev",
-        data={
-            'image': url,
-        },
-        headers={'api-key': KEY}
-    )
-
-    js = data.json()
-    sus_count = len(js["output"]["Objects"])
-    conf = []
-
-    with open("temp.png", "wb") as f:
-        f.write(requests.get(url).content)
-    image = Image.open("temp.png")
-    draw = ImageDraw.Draw(image)
-
-    for object in js["output"]["Objects"]:
-        bb = object["bounding_box"]
-        if object["confidence"] >= 0.7:
-            # draw.rectangle(((bb[0], bb[1]), (bb[2], bb[3])), outline=colours[i])
-            draw.rectangle(((bb[0], bb[1]), (bb[2] + bb[0], bb[3] + bb[2])), outline=colours[i])
-            conf.append((object["confidence"], colours[i]))
-
-            i += 1
-            if i >= len(colours):
-                i = 0
-        else:
-            sus_count -= 1
-
-    image.save("out.png")
-
-    if sus_count:
-        await message.channel.send(" ".join([f"sus ({obj[1]} -- {round(obj[0] * 100)}% confident)" for obj in conf]), file=discord.File("out.png"))
-
 @bot.event
 async def on_message(message: discord.Message):
     if message.author.bot: return
@@ -118,41 +78,8 @@ async def owofy(ctx, *, message):
         await ctx.send("You need to put a message after the command! (%owofy [message])")
 
 
-# NOTE: You need to have FFMPEG and the amongus drip song in the bot files
-# Also, replace the "[INSERT HERE]" stuff with the actual routes to the files
-# for example, mine is
-# C:/Users/[username]/Desktop/susbot/ffmpeg.exe
-# C:/Users/[username]/Desktop/susbot/drip.mp3
-# for the first and second inserts, respectively
-from discord import FFmpegPCMAudio
-
-
-@bot.command()
-async def dripify(ctx):
-    """Makes a voice channel drippy"""
-    if (ctx.author.voice):
-        channel = ctx.message.author.voice.channel
-        voice = await channel.connect()
-        source = FFmpegPCMAudio(executable="[INSERT HERE]", source="[INSERT HERE]")
-        player = voice.play(source)
-    else:
-        await ctx.send("You must be in a voice channel to use this command!")
-
-
-@bot.command()
-async def undripify(ctx):
-    """Undripify a voice channel"""
-    if ctx.voice_client:
-        await ctx.voice_client.disconnect()
-    else:
-        ctx.send("I'm not in a voice channel!")
-
-
 with open(".TOKEN") as f:
     tok = f.read()
-
-with open(".KEY") as f:
-    KEY = f.read()
 
 bot.load_extension('jishaku')
 bot.run(tok)
